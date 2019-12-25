@@ -1,0 +1,46 @@
+{
+  "name": "vue-composition-api-tsx-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:e2e": "vue-cli-service test:e2e",
+    "test": "ava",
+    "prettier": "prettier .circleci/config.yml  src/{**/,}*.{ts,json} tests/{**/,}*.{ts,json}",
+    "format:check": "npm run prettier -- --list-different",
+    "format:fix": "npm run prettier -- --write"
+  },
+  "dependencies": {
+    "@vue/composition-api": "^0.3.2",
+    "await-of": "^1.2.0",
+    "core-js": "^2.6.5",
+    "register-service-worker": "^1.6.2",
+    "sanctuary": "^2.0.1",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-e2e-cypress": "^4.1.1",
+    "@vue/cli-plugin-pwa": "^4.1.1",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "ava": "^2.4.0",
+    "babel-preset-vca-jsx": "^0.1.0",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.5.2",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "ava": {
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  }
+}

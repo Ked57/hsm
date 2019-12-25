@@ -1,0 +1,31 @@
+{
+  "name": "hsm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier .circleci/config.yml  serverapp/src/{**/,}*.{ts,json} serverapp/tests/{**/,}*.{ts,json} webapp/src/{**/,}*.{ts,json} webapp/tests/{**/,}*.{ts,json}",
+    "format:check": "npm run prettier -- --list-different",
+    "format:fix": "npm run prettier -- --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ked57/hsm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ked57/hsm/issues"
+  },
+  "homepage": "https://github.com/Ked57/hsm#readme",
+  "devDependencies": {
+    "husky": "^3.1.0",
+    "prettier": "^1.19.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run run format:check && npm run test",
+      "pre-push": "npm run run format:check && npm run test"
+    }
+  }
+}
