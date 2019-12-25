@@ -71,7 +71,7 @@ workflows:
             tags:
               only: /.*/
       - check-format:
-        name: check-format-webapp
+          name: check-format-webapp
           app-path: "webapp"
           requires:
             - check-format
