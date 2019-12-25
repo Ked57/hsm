@@ -66,7 +66,7 @@ workflows:
           name: check-format-serverapp
           app-path: "serverapp"
           requires:
-            - check-format
+            - install-dependencies-serverapp
           filters:
             tags:
               only: /.*/
@@ -74,7 +74,7 @@ workflows:
           name: check-format-webapp
           app-path: "webapp"
           requires:
-            - check-format
+            - install-dependencies-webapp
           filters:
             tags:
               only: /.*/
@@ -82,7 +82,7 @@ workflows:
           name: build-serverapp
           app-path: "serverapp"
           requires:
-            - build
+            - check-format-serverapp
           filters:
             tags:
               only: /.*/
@@ -90,7 +90,7 @@ workflows:
           name: build-webapp
           app-path: "webapp"
           requires:
-            - build
+            - check-format-webapp
           filters:
             tags:
               only: /.*/
