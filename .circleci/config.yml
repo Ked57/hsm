@@ -51,40 +51,46 @@ workflows:
   deploy:
     jobs:
       - install-dependencies:
+          name: install-dependencies-serverapp
           app-path: "serverapp"
           filters:
             tags:
               only: /.*/
       - install-dependencies:
+          name: install-dependencies-webapp
           app-path: "webapp"
           filters:
             tags:
               only: /.*/
       - check-format:
+          name: check-format-serverapp
           app-path: "serverapp"
           requires:
-            - install-dependencies
+            - check-format
           filters:
             tags:
               only: /.*/
       - check-format:
+        name: check-format-webapp
           app-path: "webapp"
           requires:
-            - install-dependencies
+            - check-format
           filters:
             tags:
               only: /.*/
       - build:
+          name: build-serverapp
           app-path: "serverapp"
           requires:
-            - install-dependencies
+            - build
           filters:
             tags:
               only: /.*/
       - build:
+          name: build-webapp
           app-path: "webapp"
           requires:
-            - install-dependencies
+            - build
           filters:
             tags:
               only: /.*/
