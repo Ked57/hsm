@@ -22,6 +22,7 @@ jobs:
           root: ./
           paths:
             - << parameters.app-path >>/node_modules
+            - /home/circleci/.cache/Cypress
 
   check-format:
     executor: main-executor
