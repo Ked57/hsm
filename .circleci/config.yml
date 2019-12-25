@@ -23,8 +23,8 @@ jobs:
             - v2-deps-{{ .Branch }}
             - v2-deps
       - run: 
-        command: npm ci
-        working_directory: ./<< parameters.app-path >>
+          command: npm ci
+          working_directory: ./<< parameters.app-path >>
       - save_cache:
           key: v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app >>/package.json" }}
           paths:
@@ -69,10 +69,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        keys:
-          - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
-          - v2-deps-{{ .Branch }}
-          - v2-deps
+          keys:
+            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
       - run: 
           command: npm run build
           working_directory: ./<< parameters.app-path >>
