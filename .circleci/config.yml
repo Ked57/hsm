@@ -22,6 +22,8 @@ jobs:
           root: ./
           paths:
             - << parameters.app-path >>/node_modules
+      - persist_to_workspace:
+          paths:
             - /home/circleci/.cache/Cypress
 
   check-format:
@@ -44,6 +46,8 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
+      - attach_workspace:
+          at: /home/circleci/.cache/Cypress
       - run: cd << parameters.app-path >> && npm run test
 
   build:
