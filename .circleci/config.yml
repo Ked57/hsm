@@ -22,7 +22,6 @@ jobs:
           root: ./
           paths:
             - << parameters.app-path >>/node_modules
-            - ~/.cache
 
   check-format:
     executor: main-executor
@@ -44,6 +43,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
+      - run: cypress install
       - run: cd << parameters.app-path >> && npm run test
 
   build:
