@@ -17,11 +17,11 @@ jobs:
         type: string
     steps:
       - checkout
-      - run: cd $app-path && npm ci
+      - run: cd << parameters.app-path >> && npm ci
       - persist_to_workspace:
           root: ./
           paths:
-            - $app-path/node_modules
+            - << parameters.app-path >>/node_modules
 
   check-format:
     executor: main-executor
@@ -32,7 +32,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
-      - run: cd $app-path && npm run format:check
+      - run: cd << parameters.app-path >> && npm run format:check
 
   build:
     executor: main-executor
@@ -43,7 +43,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./
-      - run: cd $app-path && npm run build
+      - run: cd << parameters.app-path >> && npm run build
 
 workflows:
   version: 2
