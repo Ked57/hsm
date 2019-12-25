@@ -3,6 +3,9 @@ executors:
   main-executor:
     docker:
       - image: circleci/node:lts
+  cypress-executor:
+    docker:
+      - image: cypress/browsers
   docker-publisher:
     environment:
         IMAGE_NAME: jonathancardoso/building-on-ci
@@ -46,7 +49,7 @@ jobs:
       - run: cd << parameters.app-path >> && npm run format:check
 
   test:
-    executor: main-executor
+    executor: cypress-executor
     parameters:
         app-path:
           type: string
