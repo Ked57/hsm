@@ -17,10 +17,18 @@ jobs:
         type: string
     steps:
       - checkout
-      - run: cd << parameters.app-path >> && npm ci
-      - persist_to_workspace:
-          root: ./
+      - restore_cache:
+          keys:
+            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
+      - run: 
+        command: npm ci
+        working_directory: ./<< parameters.app-path >>
+      - save_cache:
+          key: v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app >>/package.json" }}
           paths:
+            - ~/.cache 
             - << parameters.app-path >>/node_modules
 
   check-format:
@@ -30,8 +38,11 @@ jobs:
           type: string
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
+      - restore_cache:
+          keys:
+            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
       - run: cd << parameters.app-path >> && npm run format:check
 
   test:
@@ -41,10 +52,14 @@ jobs:
           type: string
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
-      - run: cypress install
-      - run: cd << parameters.app-path >> && npm run test
+      - restore_cache:
+          keys:
+            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v2-deps-{{ .Branch }}
+            - v2-deps
+      - run: 
+          command: npm run test
+          working_directory: ./<< parameters.app-path >>
 
   build:
     executor: main-executor
@@ -53,9 +68,14 @@ jobs:
           type: string
     steps:
       - checkout
-      - attach_workspace:
-          at: ./
-      - run: cd << parameters.app-path >> && npm run build
+      - restore_cache:
+        keys:
+          - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+          - v2-deps-{{ .Branch }}
+          - v2-deps
+      - run: 
+          command: npm run build
+          working_directory: ./<< parameters.app-path >>
 
 workflows:
   version: 2
