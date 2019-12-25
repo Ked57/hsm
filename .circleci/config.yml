@@ -3,11 +3,11 @@ executors:
   main-executor:
     docker:
       - image: circleci/node:lts
-    docker-publisher:
-        environment:
-          IMAGE_NAME: jonathancardoso/building-on-ci
-        docker:
-          - image: circleci/buildpack-deps:stretch
+  docker-publisher:
+    environment:
+        IMAGE_NAME: jonathancardoso/building-on-ci
+    docker:
+      - image: circleci/buildpack-deps:stretch
 
 jobs:
   install-dependencies:
