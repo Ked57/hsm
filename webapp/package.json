@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:e2e": "vue-cli-service test:e2e",
-    "test": "ava",
+    "test:unit": "ava",
+    "test": "npm run test:e2e -- --headless",
     "prettier": "prettier .circleci/config.yml  src/{**/,}*.{ts,json} tests/{**/,}*.{ts,json}",
     "format:check": "npm run prettier -- --list-different",
     "format:fix": "npm run prettier -- --write"

@@ -34,6 +34,17 @@ jobs:
           at: ./
       - run: cd << parameters.app-path >> && npm run format:check
 
+  test:
+    executor: main-executor
+    parameters:
+        app-path:
+          type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: cd << parameters.app-path >> && npm run test
+
   build:
     executor: main-executor
     parameters:
@@ -75,6 +86,22 @@ workflows:
           app-path: "webapp"
           requires:
             - install-dependencies-webapp
+          filters:
+            tags:
+              only: /.*/
+      - test:
+          name: test-serverapp
+          app-path: "serverapp"
+          requires:
+            - check-format-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - test:
+          name: test-webapp
+          app-path: "webapp"
+          requires:
+            - check-format-webapp
           filters:
             tags:
               only: /.*/
