@@ -109,7 +109,7 @@ workflows:
           name: build-serverapp
           app-path: "serverapp"
           requires:
-            - check-format-serverapp
+            - test-serverapp
           filters:
             tags:
               only: /.*/
@@ -117,7 +117,7 @@ workflows:
           name: build-webapp
           app-path: "webapp"
           requires:
-            - check-format-webapp
+            - test-webapp
           filters:
             tags:
               only: /.*/
