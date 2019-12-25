@@ -1,0 +1,91 @@
+version: 2.1
+
+executors:
+  main-executor:
+    docker:
+      - image: circleci/node:lts
+    docker-publisher:
+        environment:
+          IMAGE_NAME: jonathancardoso/building-on-ci
+        docker:
+          - image: circleci/buildpack-deps:stretch
+
+jobs:
+  install-dependencies:
+    executor: main-executor
+    parameters:
+      app-path:
+        type: string
+    steps:
+      - checkout
+      - run: cd $app-path && npm ci
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - $app-path/node_modules
+
+  check-format:
+    executor: main-executor
+    parameters:
+        app-path:
+          type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: cd $app-path && npm run format:check
+
+  build:
+    executor: main-executor
+    parameters:
+        app-path:
+          type: string
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run: cd $app-path && npm run build
+
+workflows:
+  version: 2
+
+  deploy:
+    jobs:
+      - install-dependencies:
+          app-path: "serverapp"
+          filters:
+            tags:
+              only: /.*/
+      - install-dependencies:
+          app-path: "webapp"
+          filters:
+            tags:
+              only: /.*/
+      - check-format:
+          app-path: "serverapp"
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - check-format:
+          app-path: "webapp"
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - build:
+          app-path: "serverapp"
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
+      - build:
+          app-path: "webapp"
+          requires:
+            - install-dependencies
+          filters:
+            tags:
+              only: /.*/
