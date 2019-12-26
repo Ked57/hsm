@@ -36,5 +36,5 @@ COPY --from=webapp-builder /app/dist ./webapp
 
 RUN npm install --production
 
-EXPOSE $PORT
+EXPOSE 3000
 CMD ["node", "app.js"]
