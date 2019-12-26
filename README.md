@@ -15,6 +15,12 @@
 
 This is a typescript app able to perform commands by ssh into your server, it exposes an API 
 
+To use the server app
+
+```sh
+cd serverapp
+```
+
 ## Install
 
 ```sh
@@ -24,7 +30,35 @@ npm install
 ## Usage
 
 ```sh
-npm start
+npm run dev
+```
+
+## Run tests
+
+```sh
+npm run test
+```
+
+# Webapp side
+
+This is a VueJS, typescript app using TSX and the composition API. It sends requests to the server app
+
+To use the Webapp
+
+```sh
+cd webapp
+```
+
+## Install
+
+```sh
+npm install
+```
+
+## Usage
+
+```sh
+npm run dev
 ```
 
 ## Run tests
