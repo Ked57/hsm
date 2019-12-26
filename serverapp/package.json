@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Ked57/hsm#readme",
   "devDependencies": {
+    "@types/permit": "^0.2.1",
     "ava": "^2.4.0",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
@@ -34,6 +35,8 @@
   "dependencies": {
     "await-of": "^1.2.0",
     "fastify": "^2.11.0",
+    "fastify-cors": "^3.0.0",
+    "permit": "^0.2.4",
     "pino-pretty": "^3.5.0",
     "sanctuary": "^2.0.1"
   },
