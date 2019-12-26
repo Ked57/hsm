@@ -22,14 +22,14 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
       - run:
           command: npm ci
           working_directory: << parameters.app-path >>
       - save_cache:
-          key: v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+          key: v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
           paths:
             - ~/.cache
             - << parameters.app-path >>/node_modules
@@ -43,9 +43,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
       - run: 
           command: npm run format:check
           working_directory: << parameters.app-path >>
@@ -59,9 +59,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
       - run:
           command: npm run test
           working_directory: << parameters.app-path >>
@@ -75,9 +75,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
-            - v2-deps-{{ .Branch }}
-            - v2-deps
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
       - run:
           command: npm run build
           working_directory: << parameters.app-path >>
