@@ -11,8 +11,8 @@ export default createComponent({
   },
   setup(props) {
     return () => (
-      <div class="text-black-500">
-       {props.msg}
+      <div>
+       <h1>{props.msg}</h1>
       </div>
     );
   },

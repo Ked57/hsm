@@ -19,13 +19,6 @@
   },
   "homepage": "https://github.com/Ked57/hsm#readme",
   "devDependencies": {
-    "husky": "^3.1.0",
     "prettier": "^1.19.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run run format:check && npm run test",
-      "pre-push": "npm run run format:check && npm run test"
-    }
   }
 }
