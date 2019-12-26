@@ -5,7 +5,7 @@ executors:
       - image: circleci/node:lts
   cypress-executor:
     docker:
-      - image: cypress/base:13
+      - image: cypress/base:13.3.0
   docker-publisher:
     environment:
       IMAGE_NAME: jonathancardoso/building-on-ci
