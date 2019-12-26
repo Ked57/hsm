@@ -1,6 +1,6 @@
 {
-  "name": "vue-composition-api-tsx-example",
-  "version": "0.1.0",
+  "name": "hsm-webapp",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
