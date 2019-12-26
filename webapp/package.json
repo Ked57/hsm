@@ -38,12 +38,6 @@
     "typescript": "^3.5.2",
     "vue-template-compiler": "^2.6.10"
   },
-  "postcss": {
-    "plugins": {
-      "tailwindcss": "tailwind.js",
-      "autoprefixer": {}
-    }
-  },
   "ava": {
     "compileEnhancements": false,
     "extensions": [
