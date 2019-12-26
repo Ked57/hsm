@@ -51,7 +51,7 @@ jobs:
           working_directory: << parameters.app-path >>
 
   test:
-    executor: cypress-executor
+    executor: main-executor
     parameters:
       app-path:
         type: string
