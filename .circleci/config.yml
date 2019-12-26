@@ -27,7 +27,7 @@ jobs:
             - v2-deps
       - run:
           command: npm ci
-          working_directory: ./<< parameters.app-path >>
+          working_directory: << parameters.app-path >>
       - save_cache:
           key: v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
           paths:
@@ -62,7 +62,7 @@ jobs:
             - v2-deps
       - run:
           command: npm run test
-          working_directory: ./<< parameters.app-path >>
+          working_directory: << parameters.app-path >>
 
   build:
     executor: main-executor
@@ -78,7 +78,7 @@ jobs:
             - v2-deps
       - run:
           command: npm run build
-          working_directory: ./<< parameters.app-path >>
+          working_directory: << parameters.app-path >>
 
 workflows:
   version: 2
