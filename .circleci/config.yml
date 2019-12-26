@@ -73,7 +73,7 @@ jobs:
             - v3-deps-{{ .Branch }}
             - v3-deps
       - run:
-          command: npm run test
+          command: npm install -g @vue/cli && npm run test
           working_directory: webapp
 
   build:
