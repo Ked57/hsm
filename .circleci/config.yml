@@ -5,7 +5,7 @@ executors:
       - image: circleci/node:lts
   cypress-executor:
     docker:
-      - image: cypress/browsers
+      - image: cypress/base:13
   docker-publisher:
     environment:
       IMAGE_NAME: jonathancardoso/building-on-ci
@@ -46,25 +46,35 @@ jobs:
             - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
             - v3-deps-{{ .Branch }}
             - v3-deps
-      - run: 
+      - run:
           command: npm run format:check
           working_directory: << parameters.app-path >>
 
-  test:
+  test-serverapp:
     executor: main-executor
-    parameters:
-      app-path:
-        type: string
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}-{{ checksum "serverapp/package.json" }}
             - v3-deps-{{ .Branch }}
             - v3-deps
       - run:
           command: npm run test
-          working_directory: << parameters.app-path >>
+          working_directory: serverapp
+
+  test-webapp:
+    executor: cypress-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "webapp/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm run test
+          working_directory: webapp
 
   build:
     executor: main-executor
@@ -115,17 +125,13 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - test:
-          name: test-serverapp
-          app-path: "serverapp"
+      - test-serverapp:
           requires:
             - check-format-serverapp
           filters:
             tags:
               only: /.*/
-      - test:
-          name: test-webapp
-          app-path: "webapp"
+      - test-webapp:
           requires:
             - check-format-webapp
           filters:
