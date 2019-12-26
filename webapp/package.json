@@ -1,6 +1,6 @@
 {
-  "name": "vue-composition-api-tsx-example",
-  "version": "0.1.0",
+  "name": "hsm-webapp",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -19,6 +19,7 @@
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "sanctuary": "^2.0.1",
+    "tailwindcss": "^1.1.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1",

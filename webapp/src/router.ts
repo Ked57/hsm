@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import App from "./App";
+import Home from "./components/Home";
+import Error from "./components/Error";
 
 Vue.use(Router);
 
@@ -8,8 +9,13 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "app",
-      component: App as any
+      name: "home",
+      component: Home
+    },
+    {
+      path: "*",
+      name: "error",
+      component: Error as any
     }
   ]
 });
