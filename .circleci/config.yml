@@ -73,7 +73,7 @@ jobs:
             - v3-deps-{{ .Branch }}
             - v3-deps
       - run:
-          command: npm install && npm run test
+          command: npm install && npm run test:e2e:ci
           working_directory: webapp
 
   build:
