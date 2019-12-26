@@ -46,7 +46,9 @@ jobs:
             - v2-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
             - v2-deps-{{ .Branch }}
             - v2-deps
-      - run: cd << parameters.app-path >> && npm run format:check
+      - run: 
+          command: npm run format:check
+          working_directory: << parameters.app-path >>
 
   test:
     executor: cypress-executor
