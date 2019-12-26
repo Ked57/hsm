@@ -7,7 +7,7 @@
     "start": "node ./dist/app.js",
     "dev": "nodemon --watch ./src --exec ts-node -r dotenv/config ./src/app.ts",
     "build": "tsc",
-    "test": "ava",
+    "test": "npx ava",
     "prettier": "prettier .circleci/config.yml  src/{**/,}*.{ts,json} tests/{**/,}*.{ts,json}",
     "format:check": "npm run prettier -- --list-different",
     "format:fix": "npm run prettier -- --write"
