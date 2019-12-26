@@ -7,10 +7,9 @@ executors:
     docker:
       - image: cypress/base:13.3.0
   docker-publisher:
-    environment:
-      IMAGE_NAME: jonathancardoso/building-on-ci
     docker:
       - image: circleci/buildpack-deps:stretch
+      
 
 jobs:
   install-dependencies:
@@ -91,6 +90,39 @@ jobs:
       - run:
           command: npm run build
           working_directory: << parameters.app-path >>
+  build-docker-image:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker 
+      - run:
+        name: Build Docker image
+          command: |
+            docker build -t $IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  publish-tag:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            IMAGE_TAG=${CIRCLE_TAG/v/''}
+            docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
+            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_NAME:$IMAGE_TAG
 
 workflows:
   version: 2
@@ -153,3 +185,18 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - build-docker-image:
+          requires:
+            - build-webapp
+            - build-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - publish-tag:
+          requires:
+            - build-docker-image
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
