@@ -1,0 +1,201 @@
+version: 2.1
+executors:
+  main-executor:
+    docker:
+      - image: circleci/node:lts
+  cypress-executor:
+    docker:
+      - image: cypress/base:13.3.0
+  docker-publisher:
+    docker:
+      - image: circleci/buildpack-deps:stretch
+      
+
+jobs:
+  install-dependencies:
+    executor: main-executor
+    parameters:
+      app-path:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm ci
+          working_directory: << parameters.app-path >>
+      - save_cache:
+          key: v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+          paths:
+            - ~/.cache
+            - << parameters.app-path >>/node_modules
+
+  check-format:
+    executor: main-executor
+    parameters:
+      app-path:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm run format:check
+          working_directory: << parameters.app-path >>
+
+  test-serverapp:
+    executor: main-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "serverapp/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm run test
+          working_directory: serverapp
+
+  test-webapp:
+    executor: cypress-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "webapp/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm install && npm run test:e2e:ci
+          working_directory: webapp
+
+  build:
+    executor: main-executor
+    parameters:
+      app-path:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v3-deps-{{ .Branch }}-{{ checksum "<< parameters.app-path >>/package.json" }}
+            - v3-deps-{{ .Branch }}
+            - v3-deps
+      - run:
+          command: npm run build
+          working_directory: << parameters.app-path >>
+  build-docker-image:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker 
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+  publish-tag:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            IMAGE_TAG=${CIRCLE_TAG/v/''}
+            docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
+            docker push $IMAGE_NAME:latest
+            docker push $IMAGE_NAME:$IMAGE_TAG
+
+workflows:
+  version: 2
+
+  deploy:
+    jobs:
+      - install-dependencies:
+          name: install-dependencies-serverapp
+          app-path: "serverapp"
+          filters:
+            tags:
+              only: /.*/
+      - install-dependencies:
+          name: install-dependencies-webapp
+          app-path: "webapp"
+          filters:
+            tags:
+              only: /.*/
+      - check-format:
+          name: check-format-serverapp
+          app-path: "serverapp"
+          requires:
+            - install-dependencies-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - check-format:
+          name: check-format-webapp
+          app-path: "webapp"
+          requires:
+            - install-dependencies-webapp
+          filters:
+            tags:
+              only: /.*/
+      - test-serverapp:
+          requires:
+            - check-format-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - test-webapp:
+          requires:
+            - check-format-webapp
+          filters:
+            tags:
+              only: /.*/
+      - build:
+          name: build-serverapp
+          app-path: "serverapp"
+          requires:
+            - test-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - build:
+          name: build-webapp
+          app-path: "webapp"
+          requires:
+            - test-webapp
+          filters:
+            tags:
+              only: /.*/
+      - build-docker-image:
+          requires:
+            - build-webapp
+            - build-serverapp
+          filters:
+            tags:
+              only: /.*/
+      - publish-tag:
+          requires:
+            - build-docker-image
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
