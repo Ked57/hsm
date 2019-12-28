@@ -1,5 +1,7 @@
 import fastify from "fastify";
 import cors from "fastify-cors";
+import fastifyStatic from "fastify-static";
+import path from "path";
 import { Bearer } from "permit";
 import { authorize } from "./util/authorization";
 
@@ -11,6 +13,10 @@ export const main = async () => {
   app.addHook("preHandler", (req, res) => authorize(permit, req, res));
 
   app.register(cors, { origin: "*" });
+
+  app.register(fastifyStatic, {
+    root: path.join(__dirname, "webapp")
+  });
 
   const address = await app.listen(
     Number(process.env.PORT || "3000"),

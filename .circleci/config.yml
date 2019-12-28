@@ -122,6 +122,16 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
+  app-deploy:
+    executor: main-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Captain Rover CLI
+          command: sudo npm install -g caprover
+      - deploy:
+          name: Deploy app to Captain Rover
+          command: caprover deploy -h $DOMAIN -p $PASSWORD -b master -a $APPNAME
 
 workflows:
   version: 2
@@ -194,6 +204,14 @@ workflows:
       - publish-tag:
           requires:
             - build-docker-image
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - app-deploy:
+          requires:
+            - publish-tag
           filters:
             tags:
               only: /^v.*/
