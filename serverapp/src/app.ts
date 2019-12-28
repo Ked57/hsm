@@ -4,6 +4,7 @@ import fastifyStatic from "fastify-static";
 import path from "path";
 import { Bearer } from "permit";
 import { authorize } from "./util/authorization";
+import { registerRoutes } from "./routes/register-routes";
 
 export const main = async () => {
   const app = fastify({ logger: { prettyPrint: true } });
@@ -17,6 +18,8 @@ export const main = async () => {
   app.register(fastifyStatic, {
     root: path.join(__dirname, "webapp")
   });
+
+  registerRoutes(app);
 
   const address = await app.listen(
     Number(process.env.PORT || "3000"),

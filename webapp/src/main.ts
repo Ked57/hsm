@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueCompositionApi from "@vue/composition-api";
 import App from "./App";
-import store from "./store";
+import store from "./store/store";
 import "./registerServiceWorker";
 import router from "./router";
 
