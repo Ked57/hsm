@@ -7,6 +7,10 @@ export const authorize = async (
   request: fastify.FastifyRequest,
   reply: fastify.FastifyReply<ServerResponse>
 ) => {
+  console.log(request.req.url);
+  if (!request.req.url?.startsWith("/api")) {
+    return;
+  }
   const token = permit.check(request.raw);
 
   if (process.env.SECURITY_KEY && !token) {
