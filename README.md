@@ -11,6 +11,8 @@
 
 > Web App to manage your home server
 
+You'd like to try it or install the PWA ? Go to <a href="https://hsm.k3d.dev/">https://hsm.k3d.dev/</a>
+
 # Server side
 
 This is a typescript app able to perform commands by ssh into your server, it exposes an API 
