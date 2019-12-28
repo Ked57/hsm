@@ -1,6 +1,9 @@
-import { MUTATIONS, UpdateServerSettingsPayload } from './mutation-definitions';
-import { State } from './state';
+import { MUTATIONS, UpdateServerSettingsPayload } from "./mutation-definitions";
+import { State } from "./state";
 
 export const mutations = {
-    [MUTATIONS.UPDATE_SERVER_SETTINGS]: (state: State, payload: UpdateServerSettingsPayload) => state.server = payload
-}
+  [MUTATIONS.UPDATE_SERVER_SETTINGS]: (
+    state: State,
+    payload: UpdateServerSettingsPayload
+  ) => (state.server = payload)
+};

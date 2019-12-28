@@ -10,7 +10,9 @@ export const actions: ActionTree<State, State> = {
     context: ActionContext<State, State>,
     payload: UpdateServerSettingsPayload
   ) => {
-    const [_, err] = await of(fetcher(payload.address, "/api", payload.key, {}));
+    const [_, err] = await of(
+      fetcher(payload.address, "/api", payload.key, {})
+    );
     if (err) {
       throw err;
     }
