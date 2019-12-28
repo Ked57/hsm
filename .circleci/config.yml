@@ -211,7 +211,9 @@ workflows:
               ignore: /.*/
       - app-deploy:
           requires:
-            - build-docker-image
+            - publish-tag
           filters:
             tags:
-              only: /.*/
+              only: /^v.*/
+            branches:
+              ignore: /.*/
