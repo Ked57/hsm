@@ -1,4 +1,4 @@
 {
   "schemaVersion": 2,
-  "dockerfilePath": "./dockerfile"
+  "imageName": "ked57/hsm"
  }
