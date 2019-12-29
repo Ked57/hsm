@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Ked57/hsm#readme",
   "devDependencies": {
     "@types/permit": "^0.2.1",
+    "@types/tcp-ping": "^0.1.0",
     "ava": "^2.4.0",
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.2",
@@ -39,7 +40,8 @@
     "fastify-static": "^2.5.1",
     "permit": "^0.2.4",
     "pino-pretty": "^3.5.0",
-    "sanctuary": "^2.0.1"
+    "sanctuary": "^2.0.1",
+    "tcp-ping": "^0.1.1"
   },
   "husky": {
     "hooks": {

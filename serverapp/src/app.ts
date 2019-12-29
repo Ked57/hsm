@@ -5,6 +5,7 @@ import path from "path";
 import { Bearer } from "permit";
 import { authorize } from "./util/authorization";
 import { registerRoutes } from "./routes/register-routes";
+import { getServerStatus } from "./functionalities/server-status";
 
 export const main = async () => {
   const app = fastify({ logger: { prettyPrint: true } });
@@ -18,7 +19,7 @@ export const main = async () => {
   app.register(fastifyStatic, {
     root: path.join(__dirname, "webapp")
   });
-
+  
   registerRoutes(app);
 
   const address = await app.listen(
