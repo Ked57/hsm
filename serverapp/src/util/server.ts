@@ -1,5 +1,5 @@
 export type Server = {
-    address: string,
-    user: string,
-    password: string
-}
+  address: string;
+  user: string;
+  password: string;
+};

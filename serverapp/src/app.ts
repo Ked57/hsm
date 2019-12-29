@@ -19,7 +19,7 @@ export const main = async () => {
   app.register(fastifyStatic, {
     root: path.join(__dirname, "webapp")
   });
-  
+
   registerRoutes(app);
 
   const address = await app.listen(
