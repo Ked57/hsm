@@ -10,12 +10,10 @@ export const getServerStatus = async (
 ): Promise<[boolean, Partial<Result>, Error | undefined]> => {
   const [available, errProbe] = await of(probe(address, 80));
   if (errProbe || !available) {
-    console.error(errProbe);
     return [available, {}, errProbe];
   }
   const [pingData, errPing] = await of(ping({ address }));
   if (errPing) {
-    console.error(errPing);
     return [available, {}, errPing];
   }
   return [available, pingData, undefined];

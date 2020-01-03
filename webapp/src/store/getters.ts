@@ -1,5 +1,5 @@
 import { State } from "./state";
 
 export const getters = {
-  serverAddress: (state: State) => state.server.address
+  managerAddress: (state: State) => state.manager.address
 };

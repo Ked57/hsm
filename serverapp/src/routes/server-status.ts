@@ -1,14 +1,15 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { ServerResponse } from "http";
 import { getServerStatus } from "../functionalities/server-status";
+import { parseBody } from "../util/body-parsing";
 
 export const requestServerStatus = async (
   req: FastifyRequest,
   res: FastifyReply<ServerResponse>
 ) => {
-  const address = req.body.address;
+  const address = parseBody(req.body)?.address;
   if (!address) {
-    res.code(403).send({ error: "Missing parameter 'address'" });
+    res.code(400).send({ error: "Missing parameter 'address'" });
     return;
   }
   const [available, pingData, err] = await getServerStatus(address);

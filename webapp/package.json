@@ -33,6 +33,7 @@
     "@vue/cli-service": "^3.11.0",
     "ava": "^2.4.0",
     "babel-preset-vca-jsx": "^0.1.0",
+    "cypress": "^3.8.1",
     "prettier": "^1.19.1",
     "ts-node": "^8.5.4",
     "typescript": "^3.5.2",

@@ -7,19 +7,19 @@ import router from "@/router";
 export default createComponent({
   name: "Login",
   async beforeCreate() {
-    if (store.state.server.address === "" || store.state.server.key === "") {
+    if (store.state.manager.address === "" || store.state.manager.key === "") {
       return;
     }
     const [_, err] = await of(
-      store.dispatch(ACTIONS.LOGIN, store.state.server)
+      store.dispatch(ACTIONS.LOGIN, store.state.manager)
     );
     if (!err) {
       router.push("/");
     }
   },
   setup() {
-    let address = store.state.server.address;
-    let key = store.state.server.key;
+    let address = store.state.manager.address;
+    let key = store.state.manager.key;
     const onLoginClick = async () => {
       const [_, err] = await of(store.dispatch(ACTIONS.LOGIN, { address, key }));
       if(!err){

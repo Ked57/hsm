@@ -9,7 +9,7 @@ import router from "@/router";
 export default createComponent({
   name: "Home",
   async beforeCreate() {
-    const [_, err] = await of(store.dispatch(ACTIONS.LOGIN, store.state.server));
+    const [_, err] = await of(store.dispatch(ACTIONS.LOGIN, store.state.manager));
     if (err) {
       console.error(err);
       router.push("/login");

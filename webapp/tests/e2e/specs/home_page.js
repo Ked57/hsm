@@ -5,7 +5,7 @@ describe('The home page', () => {
   })
   it('Visits the home URL', () => {
     cy.visit('/')
-    cy.contains('h1', 'Server status')
+    cy.contains('h1', 'Server status');
   })
   it('Visits the home URL', () => {
     cy.visit('/')

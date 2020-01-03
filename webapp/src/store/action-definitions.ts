@@ -1,7 +1,8 @@
-import { UpdateServerSettingsPayload } from "./mutation-definitions";
+import { UpdateManagerSettingsPayload } from "./mutation-definitions";
 
 export const ACTIONS = {
-  LOGIN: "login"
+  LOGIN: "login",
+  FETCH_SERVER_STATUS: "fetchServerStatus"
 };
 
-export type LoginActionPayload = UpdateServerSettingsPayload;
+export type LoginActionPayload = UpdateManagerSettingsPayload;
