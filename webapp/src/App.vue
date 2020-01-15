@@ -47,13 +47,13 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(45deg, #1f487e 0%, #984447 100%);
+  background: linear-gradient(45deg, #984447 45%, #c75146 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .gradient-container {
-  background: linear-gradient(45deg, #1f487e 0%, #984447 100%);
+  background: linear-gradient(45deg, #984447 45%, #c75146 100%);
   color: #cbd5e0;
 }
 
