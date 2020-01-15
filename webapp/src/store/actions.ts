@@ -7,7 +7,7 @@ import {
   UpdateManagerSettingsPayload
 } from "./mutation-definitions";
 import { fetcher } from "./fetcher";
-import router from '@/router';
+import router from "@/router";
 
 export const actions: ActionTree<State, State> = {
   [ACTIONS.LOGIN]: async (
@@ -25,8 +25,8 @@ export const actions: ActionTree<State, State> = {
   [ACTIONS.FETCH_SERVER_STATUS]: async (
     context: ActionContext<State, State>
   ) => {
-    if(!context.state.manager.address){
-      return
+    if (!context.state.manager.address) {
+      return;
     }
     const [res, err] = await of(
       fetcher(
@@ -43,14 +43,14 @@ export const actions: ActionTree<State, State> = {
   },
   [ACTIONS.TOOGLE_MENU]: (context: ActionContext<State, State>) => {
     const nowMenuState = context.state.showMenu ? false : true;
-    context.commit(MUTATIONS.UPDATE_MENU_DISPLAY, {show: nowMenuState})
+    context.commit(MUTATIONS.UPDATE_MENU_DISPLAY, { show: nowMenuState });
   },
   [ACTIONS.LOGOUT]: (context: ActionContext<State, State>) => {
     context.commit(MUTATIONS.UPDATE_MANAGER_SETTINGS, {
       address: "",
       key: ""
-    })
-    context.commit(MUTATIONS.UPDATE_MENU_DISPLAY, {show: false})
-    router.push("/login")
+    });
+    context.commit(MUTATIONS.UPDATE_MENU_DISPLAY, { show: false });
+    router.push("/login");
   }
 };

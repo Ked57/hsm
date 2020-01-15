@@ -15,5 +15,5 @@ export type UpdateServerStatusPayload = {
 };
 
 export type UpdateMenuDisplay = {
-  show: boolean
-}
+  show: boolean;
+};

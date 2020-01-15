@@ -24,7 +24,10 @@ export const mutations = {
       }
     };
   },
-  [MUTATIONS.UPDATE_MENU_DISPLAY]: (state: State, payload: UpdateMenuDisplay) => {
+  [MUTATIONS.UPDATE_MENU_DISPLAY]: (
+    state: State,
+    payload: UpdateMenuDisplay
+  ) => {
     state.showMenu = payload.show;
   }
 };
