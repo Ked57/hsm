@@ -1,6 +1,7 @@
 export const MUTATIONS = {
   UPDATE_MANAGER_SETTINGS: "updateManagerSettings",
-  UPDATE_SERVER_STATUS: "updateServerStatus"
+  UPDATE_SERVER_STATUS: "updateServerStatus",
+  UPDATE_MENU_DISPLAY: "updateMenuDisplay"
 };
 
 export type UpdateManagerSettingsPayload = {
@@ -12,3 +13,7 @@ export type UpdateServerStatusPayload = {
   available: boolean;
   ping?: number;
 };
+
+export type UpdateMenuDisplay = {
+  show: boolean
+}

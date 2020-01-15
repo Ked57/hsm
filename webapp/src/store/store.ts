@@ -17,5 +17,5 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
-  plugins: [vuexLocal.plugin]
+  // plugins: [vuexLocal.plugin]
 });

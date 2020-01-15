@@ -1,7 +1,8 @@
 import {
   MUTATIONS,
   UpdateManagerSettingsPayload,
-  UpdateServerStatusPayload
+  UpdateServerStatusPayload,
+  UpdateMenuDisplay
 } from "./mutation-definitions";
 import { State } from "./state";
 
@@ -22,5 +23,8 @@ export const mutations = {
         status: { isUp: payload.available, ping: payload.ping || 0 }
       }
     };
+  },
+  [MUTATIONS.UPDATE_MENU_DISPLAY]: (state: State, payload: UpdateMenuDisplay) => {
+    state.showMenu = payload.show;
   }
 };

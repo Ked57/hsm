@@ -15,8 +15,7 @@
       v-model="state.key"
     />
     <button
-      class="gradient-container rounded-lg m-4 p-2 max-w-xl w-11/12 text-xl text-center h-16"
-      :click="onLoginClick"
+      v-on:click="onLoginClick" class="gradient-container rounded-lg m-4 p-2 max-w-xl w-11/12 text-xl text-center h-16"
     >
       Login
     </button>
@@ -50,16 +49,19 @@ export default createComponent({
 
     const onLoginClick = async () => {
       const [_, err] = await of(
-        store.dispatch(ACTIONS.LOGIN, { address: state.address, key: state.key })
+        store.dispatch(ACTIONS.LOGIN, {
+          address: state.address,
+          key: state.key
+        })
       );
       if (!err) {
         router.push("/");
       }
-    }
+    };
     return {
       state,
       onLoginClick
-    }
+    };
   }
 });
 </script>

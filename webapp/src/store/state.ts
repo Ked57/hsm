@@ -12,6 +12,7 @@ export type State = {
     key: string;
   };
   servers: { [key: string]: Server };
+  showMenu: boolean;
 };
 
 export const state: State = {
@@ -19,6 +20,7 @@ export const state: State = {
     address: "",
     key: ""
   },
+  showMenu: false,
   servers: {
     mine: {
       address: "51.158.112.111",

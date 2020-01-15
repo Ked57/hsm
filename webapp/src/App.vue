@@ -1,17 +1,26 @@
 <template>
-  <div class="content"><Menu class="menu"></Menu><router-view class="" /></div>
+  <div :class="`content flex ${state.showMenu ? 'flex-row' : 'flex-col'}`">
+    <Menu :class="state.showMenu ? 'w-full' : ''"></Menu>
+    <router-view :class="state.showMenu ? 'hidden' : ''" />
+  </div>
 </template>
 
 <script lang="ts">
-import { createComponent } from "@vue/composition-api";
-import Menu from "./components/Menu.vue"; 
+import { createComponent, computed } from "@vue/composition-api";
+import Menu from "./components/Menu.vue";
+import store from "./store/store";
 
 export default createComponent({
   name: "App",
   components: {
     Menu
   },
-  setup() {}
+  setup() {
+    const state = computed(() => ({
+      showMenu: store.state.showMenu
+    }));
+    return { state };
+  }
 });
 </script>
 
@@ -28,10 +37,6 @@ body {
 
 .content {
   height: 100%;
-}
-
-.menu {
-  background-color: #1a202c;
 }
 
 #app {
@@ -51,4 +56,10 @@ body {
   background: linear-gradient(45deg, #1f487e 0%, #984447 100%);
   color: #cbd5e0;
 }
+
+.menu {
+  transition-property: width; 
+  transition-duration: 1s; 
+}
+
 </style>
