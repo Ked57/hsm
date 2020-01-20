@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { createComponent, reactive } from "@vue/composition-api";
+import { createComponent, reactive, computed } from "@vue/composition-api";
 import store from "../store/store";
 import { ACTIONS } from "../store/action-definitions";
 
@@ -31,10 +31,10 @@ export default createComponent({
     fetchServerStatus();
   },
   setup() {
-    const state = reactive({
+    const state = computed(() => reactive({
       isUp: store.state.servers['mine'].status.isUp,
       ping: Math.round(store.state.servers["mine"].status.ping)
-    });
+    }));
     return {
       state
     };
