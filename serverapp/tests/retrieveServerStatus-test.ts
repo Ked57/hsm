@@ -6,7 +6,7 @@ import { getServerStatus } from "../src/functionalities/server-status";
 
 test.before(async t => {
   process.env.SECURITY_KEY = "key";
-  const port = 10001
+  const port = 10001;
   const { app, address } = await main(port);
   (t.context as any)["server"] = app;
   (t.context as any)["baseUrl"] = address;
