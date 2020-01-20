@@ -1,18 +1,11 @@
 import test from "ava";
 import fetch from "node-fetch";
 import of from "await-of";
-import portfinder from "portfinder";
 import { main } from "../src/app";
 
 test.before(async t => {
   process.env.SECURITY_KEY = "key";
-  const [port, err] = await of(
-    portfinder.getPortPromise({ startPort: 40000, stopPort: 60000 })
-  );
-  if (err) {
-    t.log("ERROR", err.message, err.stack);
-    return;
-  }
+  const port = 10000;
   const { app, address } = await main(port);
   (t.context as any)["server"] = app;
   (t.context as any)["baseUrl"] = address;

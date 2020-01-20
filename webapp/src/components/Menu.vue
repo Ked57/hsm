@@ -1,6 +1,6 @@
 <template>
   <div class="menu">
-    <button v-if="!state.showMenu" v-on:click="onMenuButtonClick">
+    <button v-if="!state.showMenu" v-on:click="onMenuButtonClick" id="showMenuButton">
       <img src="../assets/icons/burger.svg" class="w-24" />
     </button>
     <div class="menuContent" v-if="state.showMenu">
