@@ -6,14 +6,14 @@ import { Bearer } from "permit";
 import { authorize } from "./util/authorization";
 import { registerRoutes } from "./routes/register-routes";
 
-export const main = async () => {
+export const main = async (port: number) => {
   const app = fastify({ logger: { prettyPrint: true } });
 
   const permit = new Bearer({});
 
   app.addHook("preHandler", (req, res) => authorize(permit, req, res));
 
-  app.register(cors, { origin: "*" });
+  app.register(cors);
 
   app.register(fastifyStatic, {
     root: path.join(__dirname, "webapp")
@@ -21,12 +21,9 @@ export const main = async () => {
 
   registerRoutes(app);
 
-  const address = await app.listen(
-    Number(process.env.PORT || "3000"),
-    process.env.HOST || "localhost"
-  );
+  const address = await app.listen(port, process.env.HOST || "localhost");
 
   return { app, address };
 };
 
-main().catch(err => console.error(err));
+main(Number(process.env.PORT || "3000")).catch(err => console.error(err));
