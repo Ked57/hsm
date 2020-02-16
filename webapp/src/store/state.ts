@@ -23,7 +23,7 @@ export const state: State = {
   showMenu: false,
   servers: {
     mine: {
-      address: "51.158.112.111",
+      address: "10.9.0.6",
       status: {
         isUp: false,
         ping: 0

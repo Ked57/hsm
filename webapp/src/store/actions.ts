@@ -52,5 +52,18 @@ export const actions: ActionTree<State, State> = {
     });
     context.commit(MUTATIONS.UPDATE_MENU_DISPLAY, { show: false });
     router.push("/login");
+  },
+  [ACTIONS.TOOGLE_SERVER_STATE]: async (context: ActionContext<State, State>) => {
+    const [response, err] = await of(fetcher(context.state.manager.address, "/api/server/state", context.state.manager.key, {
+      targetState: !context.state.servers["mine"].status.isUp, server: {
+          address: context.state.servers["mine"].address,
+          user: "pi",
+          password: ""
+      }
+    }));
+    if(err) {
+      console.error("[ERROR]: toogle server state", err);
+    }
+    console.log("toogleServerState", response);
   }
 };

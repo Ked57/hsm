@@ -8,6 +8,7 @@ import {
   requestUpdateServer,
   requestDeleteServer
 } from "./server-management";
+import { requestToogleServerStatus } from "./server-state-management";
 
 export const registerRoutes = (app: FastifyInstance): void => {
   app.post("/api", {}, requestHome);
@@ -17,4 +18,5 @@ export const registerRoutes = (app: FastifyInstance): void => {
   app.post("/api/server/update", requestUpdateServer);
   app.post("/api/server/delete", requestDeleteServer);
   app.post("/api/server", requestServer);
+  app.post("/api/server/state", requestToogleServerStatus)
 };

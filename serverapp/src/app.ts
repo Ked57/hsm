@@ -7,7 +7,7 @@ import { authorize } from "./util/authorization";
 import { registerRoutes } from "./routes/register-routes";
 
 export const main = async (port: number) => {
-  const app = fastify({ logger: { prettyPrint: true } });
+  const app = fastify();// { logger: { prettyPrint: true } }
 
   const permit = new Bearer({});
 

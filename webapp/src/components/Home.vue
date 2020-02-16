@@ -4,7 +4,7 @@
       Home Server Manager
     </h1>
     <ServerStatus />
-    <ActionButton text="On / Off" action="" />
+    <ActionButton text="On / Off" action="toogleServerState" />
     <ActionButton text="Add an action" action="" />
   </div>
 </template>
